@@ -22,7 +22,7 @@ public class UserController {
     public UserController(UserService userService){
         this.userService = userService;
     }
-    @PostMapping("/user")
+    @PostMapping("/users")
     public ResponseEntity<User>saveUser(@RequestBody @Valid UserRecordDto userRecordDto) {
 
         var user = new User();
