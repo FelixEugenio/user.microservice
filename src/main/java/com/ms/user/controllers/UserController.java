@@ -9,17 +9,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ms.user.dtos.UserRecordDto;
 import com.ms.user.models.User;
+import com.ms.user.services.UserService;
 
 import jakarta.validation.Valid;
 
 @RestController
 public class UserController {
+
+    //ponto de injecao
+    final UserService userService;
+
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
     @PostMapping("/user")
     public ResponseEntity<User>saveUser(@RequestBody @Valid UserRecordDto userRecordDto) {
 
         var user = new User();
         //convertendo de dto para model
         BeanUtils.copyProperties(userRecordDto, user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 }
